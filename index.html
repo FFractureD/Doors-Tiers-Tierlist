@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOORS: TIERS TIERLIST</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #080a10;
+    --bg-panel: #111522;
+    --bg-panel-2: #161c2d;
+    --border-soft: rgba(255, 255, 255, 0.06);
+    --text-primary: #f0f4ff;
+    --text-muted: #8b95ad;
+    --text-dim: #555d73;
+
+    --gold-light: #ffdf70;
+    --gold-mid: #f0bc22;
+    --gold-dark: #b8860b;
+
+    --iron-1: #636e82; --iron-2: #8490a3; --iron-3: #aeb9cc;
+    --gold-1: #b8860b; --gold-2: #dfa81c; --gold-3: #ffcf40;
+    --diamond-1: #1a7b8c; --diamond-2: #28b8d0; --diamond-3: #75e8fa;
+    --plat-1: #38a38d; --plat-2: #65d9c1; --plat-3: #b0fceb;
+    --ctm-a: #ff4b5c; --ctm-b: #b366ff; --ctm-c: #ffcf40;
+    --unranked: #2d3345;
+
+    --danger: #ef4444;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 25px rgba(240, 188, 34, 0.25);
+
+    --glass-bg: rgba(17, 21, 34, 0.55);
+    --glass-bg-2: rgba(22, 28, 45, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-border-hi: rgba(255, 255, 255, 0.16);
+    --ring-gold: rgba(240, 188, 34, 0.45);
+    --shadow-lift: 0 18px 45px -12px rgba(0, 0, 0, 0.55);
+    --shadow-lift-hover: 0 26px 60px -14px rgba(0, 0, 0, 0.65);
+    --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  [hidden] { display: none !important; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text-primary);
+    background:
+      radial-gradient(1000px 600px at 15% 0%, rgba(240,188,34,0.07), transparent 60%),
+      radial-gradient(900px 500px at 85% 10%, rgba(117,232,250,0.06), transparent 50%),
+      radial-gradient(800px 500px at 50% 100%, rgba(179,102,255,0.05), transparent 55%),
+      var(--bg-deep);
+    background-attachment: fixed;
+    padding-bottom: 110px; /* Increased to ensure list clears the new fixed bar */
+    position: relative;
+    isolation: isolate;
+  }
+
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    opacity: 0.035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .bg-decor { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+  .bg-decor .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; }
+  .bg-decor .orb-1 { width: 480px; height: 480px; top: -160px; left: -120px; background: radial-gradient(circle, var(--gold-mid), transparent 70%); animation: drift1 22s ease-in-out infinite; }
+  .bg-decor .orb-2 { width: 420px; height: 420px; top: 10%; right: -140px; background: radial-gradient(circle, var(--diamond-2), transparent 70%); animation: drift2 26s ease-in-out infinite; }
+  .bg-decor .orb-3 { width: 380px; height: 380px; bottom: -160px; left: 30%; background: radial-gradient(circle, var(--ctm-b), transparent 70%); animation: drift1 30s ease-in-out infinite reverse; }
+  @keyframes drift1 { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,30px) scale(1.08); } }
+  @keyframes drift2 { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,40px) scale(1.05); } }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: #232b42; border-radius: 8px; border: 2px solid var(--bg-deep); }
+  ::-webkit-scrollbar-thumb:hover { background: #35405e; }
+
+  a { color: inherit; }
+  button { font-family: inherit; cursor: pointer; transition: all 0.2s var(--ease-snap); }
+  input, select, textarea, button { outline: none; }
+  :focus-visible { outline: 2px solid var(--gold-mid); outline-offset: 2px; }
+
+  @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes modalPop { from { opacity: 0; transform: translateY(10px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes shimmerSweep { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+  /* Header */
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(8, 10, 16, 0.72); backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.03), 0 20px 40px -20px rgba(0,0,0,0.6);
+  }
+
+  .top-bar { max-width: 1200px; margin: 0 auto; padding: 26px 24px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+  .title-wrap { display: flex; align-items: center; gap: 14px; }
+  .title-badge { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; flex: none; border-radius: 14px; background: linear-gradient(145deg, var(--gold-light), var(--gold-dark)); box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255,255,255,0.4); font-size: 1.3rem; transform: rotate(-6deg); transition: transform 0.35s var(--ease-snap); }
+  .title-badge:hover { transform: rotate(0deg) scale(1.06); }
+  
+  .site-title { margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; letter-spacing: 0.5px; background: linear-gradient(100deg, var(--gold-light), var(--gold-mid) 35%, var(--gold-dark) 55%, var(--gold-mid) 75%, var(--gold-light)); background-size: 250% auto; -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 4px 30px rgba(240, 188, 34, 0.25); animation: shimmerSweep 6s linear infinite; }
+  .site-sub { margin: 10px 2px 0; font-size: 0.9rem; color: var(--text-muted); }
+  .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  .search-wrap { position: relative; display: flex; align-items: center; }
+  .search-wrap svg { position: absolute; left: 14px; width: 18px; height: 18px; stroke: var(--text-muted); transition: stroke 0.3s ease; z-index: 1; }
+  #searchInput { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); color: var(--text-primary); padding: 12px 16px 12px 42px; border-radius: 999px; font-size: 0.95rem; width: 220px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.03); transition: width 0.35s var(--ease-snap), border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; }
+  #searchInput::placeholder { color: var(--text-dim); }
+  #searchInput:focus { width: 270px; border-color: var(--ring-gold); background: rgba(22, 27, 43, 0.75); box-shadow: 0 0 0 4px rgba(240, 188, 34, 0.12), var(--shadow-soft); }
+  #searchInput:focus ~ svg, .search-wrap:focus-within svg { stroke: var(--gold-mid); }
+
+  .filter-wrap select { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); color: var(--text-primary); padding: 12px 36px 12px 18px; border-radius: 999px; font-size: 0.95rem; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%); background-position: calc(100% - 20px) center, calc(100% - 15px) center; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; }
+  .filter-wrap select:focus, .filter-wrap select:hover { border-color: var(--ring-gold); box-shadow: 0 0 0 4px rgba(240, 188, 34, 0.12); }
+  .filter-wrap select option { background: var(--bg-panel-2); color: var(--text-primary); }
+
+  /* Board Stats */
+  .stats-strip { max-width: 1200px; margin: 0 auto; padding: 22px 24px 22px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .stat-pill { position: relative; background: linear-gradient(180deg, var(--glass-bg-2), var(--glass-bg)); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 20px; font-size: 0.85rem; color: var(--text-muted); display: flex; gap: 9px; align-items: baseline; box-shadow: var(--shadow-soft); transition: transform 0.3s var(--ease-snap), border-color 0.3s ease, box-shadow 0.3s ease; overflow: hidden; }
+  .stat-pill::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: linear-gradient(180deg, var(--gold-light), var(--gold-dark)); }
+  .stat-pill:hover { transform: translateY(-3px); border-color: var(--glass-border-hi); box-shadow: var(--shadow-lift-hover); }
+  .stat-pill b { color: var(--text-primary); font-size: 1.15rem; font-family: 'Fredoka', sans-serif; }
+
+  /* Leaderboard */
+  .board-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .board-head { display: grid; grid-template-columns: 60px 1fr 140px 560px; gap: 20px; padding: 0 24px 14px; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 700; }
+  .col-general { text-align: center; }
+  .col-categories { text-align: center; }
+  .player-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .player-row { position: relative; display: grid; grid-template-columns: 60px 1fr 140px 560px; align-items: center; gap: 20px; padding: 20px 24px; border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--bg-panel-2), var(--bg-panel)); border: 1px solid var(--glass-border); border-left: 6px solid var(--row-accent, var(--border-soft)); box-shadow: var(--shadow-soft); transition: transform 0.28s var(--ease-snap), box-shadow 0.28s var(--ease-snap), border-color 0.28s ease; animation: fadeSlideUp 0.45s var(--ease-snap) both; }
+  .player-row:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift-hover), 0 0 0 1px var(--row-accent, transparent), 0 0 30px -6px var(--row-accent, transparent); }
+  .player-row.editable { cursor: pointer; }
+  .player-row.editable:hover { border-color: rgba(240, 188, 34, 0.6); }
+  .player-row.rank-1 { background: linear-gradient(135deg, var(--gold-light), var(--gold-mid) 70%, var(--gold-dark)); box-shadow: var(--shadow-glow), var(--shadow-lift); border-left: none; }
+  .player-row.rank-2 { background: linear-gradient(135deg, #f0f2f5, #cbd1db 70%, #8993a1); box-shadow: 0 0 25px rgba(203, 209, 219, 0.2), var(--shadow-lift); border-left: none; }
+  .player-row.rank-3 { background: linear-gradient(135deg, #e6ad81, #c48347 70%, #8c5525); box-shadow: 0 0 25px rgba(196, 131, 71, 0.25), var(--shadow-lift); border-left: none; }
+  .player-row.rank-1:hover, .player-row.rank-2:hover, .player-row.rank-3:hover { transform: translateY(-5px) scale(1.005); }
+
+  .player-row:nth-child(1) { animation-delay: 0.02s; } .player-row:nth-child(2) { animation-delay: 0.06s; } .player-row:nth-child(3) { animation-delay: 0.1s; } .player-row:nth-child(4) { animation-delay: 0.14s; } .player-row:nth-child(5) { animation-delay: 0.18s; } .player-row:nth-child(n+6) { animation-delay: 0.2s; }
+
+  .player-row.rank-1 .rank-num, .player-row.rank-1 .player-name, .player-row.rank-1 .player-points { color: #1a1300; }
+  .player-row.rank-2 .rank-num, .player-row.rank-2 .player-name, .player-row.rank-2 .player-points { color: #15181c; }
+  .player-row.rank-3 .rank-num, .player-row.rank-3 .player-name, .player-row.rank-3 .player-points { color: #1f1003; }
+
+  .rank-num { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.7rem; color: var(--text-dim); text-align: center; width: 44px; height: 44px; line-height: 44px; margin: 0 auto; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); }
+  .player-row.rank-1 .rank-num, .player-row.rank-2 .rank-num, .player-row.rank-3 .rank-num { color: inherit; opacity: 0.95; font-size: 1.9rem; background: rgba(0,0,0,0.12); border-color: rgba(0,0,0,0.15); }
+
+  .player-main { min-width: 0; }
+  .player-name { font-weight: 700; font-size: 1.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.1px; }
+  .player-points { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .player-row.rank-1 .player-points, .player-row.rank-2 .player-points, .player-row.rank-3 .player-points { opacity: 0.8; }
+
+  .progress-track { margin-top: 9px; height: 7px; width: 100%; max-width: 240px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.3); }
+  .player-row.rank-1 .progress-track, .player-row.rank-2 .progress-track, .player-row.rank-3 .progress-track { background: rgba(0, 0, 0, 0.2); }
+  .progress-fill { height: 100%; border-radius: 10px; transition: width 0.6s var(--ease-snap); box-shadow: 0 0 10px rgba(255,255,255,0.25); }
+
+  .general-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 10px; border-radius: 14px; min-width: 120px; font-family: 'Fredoka', sans-serif; border: 1px solid rgba(255,255,255,0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 6px 16px -6px rgba(0,0,0,0.4); transition: transform 0.25s var(--ease-snap); }
+  .player-row:hover .general-badge { transform: scale(1.04); }
+  .general-badge .gb-abbr { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em; }
+  .general-badge .gb-name { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.9; margin-top: 3px; }
+
+  .categories-row { display: flex; gap: 14px; flex-wrap: nowrap; }
+  .cat-badge { display: flex; flex-direction: column; align-items: center; gap: 7px; min-width: 62px; padding: 6px 4px; border-radius: 10px; transition: background 0.25s ease; }
+  .cat-badge:hover { background: rgba(255,255,255,0.04); }
+  .cat-icon-label { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .cat-icon { font-size: 1.15rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+  .cat-label { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); text-align: center; max-width: 65px; }
+  .player-row.rank-1 .cat-label, .player-row.rank-2 .cat-label, .player-row.rank-3 .cat-label { color: rgba(0, 0, 0, 0.6); font-weight: 600; }
+
+  .cat-value { font-size: 0.75rem; font-weight: 700; padding: 4px 11px; border-radius: 999px; min-width: 42px; text-align: center; color: var(--text-primary); background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.06); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .cat-badge.highlight-cat .cat-value { box-shadow: 0 0 14px var(--gold-mid); border: 1px solid var(--gold-mid); transform: translateY(-1px); }
+
+  .edit-pencil { position: absolute; top: -10px; right: -10px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg-panel-2); border: 2px solid rgba(240, 188, 34, 0.8); color: var(--gold-mid); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; opacity: 0; transform: scale(0.7); box-shadow: 0 6px 16px rgba(0,0,0,0.4); transition: opacity 0.2s ease, transform 0.2s var(--ease-snap); }
+  .player-row.editable:hover .edit-pencil { opacity: 1; transform: scale(1); }
+
+  /* Tiers Styling */
+  .fam-unranked { background: rgba(255, 255, 255, 0.05); color: var(--text-dim); }
+  .fam-iron-1 { background: linear-gradient(160deg, color-mix(in srgb, var(--iron-1) 85%, white), var(--iron-1)); color: #fff; }
+  .fam-iron-2 { background: linear-gradient(160deg, color-mix(in srgb, var(--iron-2) 85%, white), var(--iron-2)); color: #111; }
+  .fam-iron-3 { background: linear-gradient(160deg, color-mix(in srgb, var(--iron-3) 85%, white), var(--iron-3)); color: #111; }
+  .fam-gold-1 { background: linear-gradient(160deg, color-mix(in srgb, var(--gold-1) 85%, white), var(--gold-1)); color: #fff; box-shadow: 0 0 12px rgba(184,134,11,0.35); }
+  .fam-gold-2 { background: linear-gradient(160deg, color-mix(in srgb, var(--gold-2) 85%, white), var(--gold-2)); color: #111; box-shadow: 0 0 12px rgba(223,168,28,0.35); }
+  .fam-gold-3 { background: linear-gradient(160deg, color-mix(in srgb, var(--gold-3) 85%, white), var(--gold-3)); color: #111; box-shadow: 0 0 12px rgba(255,207,64,0.4); }
+  .fam-diamond-1 { background: linear-gradient(160deg, color-mix(in srgb, var(--diamond-1) 85%, white), var(--diamond-1)); color: #fff; box-shadow: 0 0 12px rgba(26,123,140,0.35); }
+  .fam-diamond-2 { background: linear-gradient(160deg, color-mix(in srgb, var(--diamond-2) 85%, white), var(--diamond-2)); color: #021a1f; box-shadow: 0 0 12px rgba(40,184,208,0.4); }
+  .fam-diamond-3 { background: linear-gradient(160deg, color-mix(in srgb, var(--diamond-3) 85%, white), var(--diamond-3)); color: #021a1f; box-shadow: 0 0 14px rgba(117,232,250,0.45); }
+  .fam-plat-1 { background: linear-gradient(160deg, color-mix(in srgb, var(--plat-1) 85%, white), var(--plat-1)); color: #fff; box-shadow: 0 0 12px rgba(56,163,141,0.35); }
+  .fam-plat-2 { background: linear-gradient(160deg, color-mix(in srgb, var(--plat-2) 85%, white), var(--plat-2)); color: #02211a; box-shadow: 0 0 12px rgba(101,217,193,0.4); }
+  .fam-plat-3 { background: linear-gradient(160deg, color-mix(in srgb, var(--plat-3) 85%, white), var(--plat-3)); color: #02211a; box-shadow: 0 0 14px rgba(176,252,235,0.45); }
+  .fam-ctm { background: linear-gradient(135deg, var(--ctm-a), var(--ctm-b) 50%, var(--ctm-c)); background-size: 200% 200%; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5); box-shadow: 0 0 15px rgba(179, 102, 255, 0.4); animation: ctmPulse 2s infinite alternate, ctmShift 5s ease infinite; }
+  @keyframes ctmPulse { 0% { box-shadow: 0 0 10px rgba(179, 102, 255, 0.3); } 100% { box-shadow: 0 0 25px rgba(255, 75, 92, 0.6); } }
+  @keyframes ctmShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+  .empty-state { text-align: center; color: var(--text-muted); padding: 70px 20px; font-size: 1rem; }
+
+  /* ================= NEW EDITOR BOTTOM BAR ================= */
+  .editor-bottom-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(8, 10, 16, 0.85); backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-top: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 30px; z-index: 90; box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+  }
+
+  .bar-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+  .bar-center { flex: 1.5; text-align: center; }
+  .bar-right { display: flex; align-items: center; justify-content: flex-end; flex: 1; }
+
+  .editor-tools-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  
+  .footer-text { margin: 0; color: var(--text-dim); font-size: 0.85rem; }
+  kbd { background: var(--bg-panel); border: 1px solid var(--border-soft); border-bottom-width: 2px; padding: 2px 8px; border-radius: 6px; font-family: monospace; font-weight: 700; color: var(--gold-mid); }
+
+  .editor-flag { background: rgba(117, 232, 250, 0.1); backdrop-filter: blur(8px); border: 1px solid rgba(117, 232, 250, 0.3); color: #75e8fa; font-size: 0.8rem; font-weight: 600; padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; gap: 8px; box-shadow: 0 6px 20px -6px rgba(117,232,250,0.35); }
+  .editor-flag .dot { width: 8px; height: 8px; border-radius: 50%; background: #75e8fa; box-shadow: 0 0 10px #75e8fa; animation: dotPulse 1.6s ease-in-out infinite; }
+  @keyframes dotPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+  .editor-btn { background: var(--glass-bg-2); backdrop-filter: blur(8px); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 0.8rem; font-weight: 600; padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+  .editor-btn:hover { border-color: rgba(240, 188, 34, 0.5); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.4); }
+
+  .fab-small {
+    width: 50px; height: 50px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-dark)); color: #1a1300;
+    font-size: 2rem; font-weight: 700; box-shadow: 0 6px 20px rgba(240, 188, 34, 0.35), inset 0 1px 0 rgba(255,255,255,0.5);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s var(--ease-snap); line-height: 0;
+  }
+  .fab-small:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 10px 30px rgba(240, 188, 34, 0.5); }
+  .fab-small:active { transform: scale(0.95) rotate(90deg); }
+
+  /* Modals */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(4, 5, 8, 0.78); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; animation: overlayFade 0.2s ease both; }
+  .modal { position: relative; background: linear-gradient(180deg, var(--bg-panel-2), var(--bg-panel)); border: 1px solid var(--glass-border-hi); border-radius: var(--radius-lg); padding: 32px; width: 100%; max-width: 400px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255,255,255,0.02); max-height: 90vh; overflow-y: auto; animation: modalPop 0.3s var(--ease-snap) both; }
+  .modal::before { content: ""; position: absolute; top: 0; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-mid), transparent); opacity: 0.6; }
+  .modal-large { max-width: 680px; }
+  .modal h2 { margin: 0 0 8px; font-family: 'Fredoka', sans-serif; font-size: 1.5rem; }
+  .modal p { margin: 0 0 20px; color: var(--text-muted); font-size: 0.9rem; }
+  .modal label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 8px; font-weight: 700; }
+
+  .modal input[type="text"], .modal input[type="password"], .modal select, .modal textarea { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border-soft); color: var(--text-primary); padding: 14px 16px; border-radius: var(--radius-sm); font-size: 0.95rem; margin-bottom: 20px; transition: border 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
+  .modal select { margin-bottom: 0; }
+  .modal select option, .modal select optgroup { background: #05070c; color: var(--text-primary); }
+  .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--gold-mid); background: rgba(0,0,0,0.3); box-shadow: 0 0 0 4px rgba(240, 188, 34, 0.1); }
+  .error-text { color: var(--danger) !important; font-size: 0.85rem; margin: -10px 0 15px; }
+
+  .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+  .btn-primary, .btn-secondary, .btn-danger { padding: 12px 24px; border-radius: 999px; border: none; font-weight: 700; font-size: 0.9rem; transition: filter 0.2s ease, transform 0.2s var(--ease-snap), box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+  .btn-primary { background: linear-gradient(135deg, var(--gold-light), var(--gold-mid)); color: #1a1300; box-shadow: 0 6px 18px -4px rgba(240,188,34,0.5); }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 10px 24px -4px rgba(240,188,34,0.6); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary { background: transparent; border: 1px solid var(--border-soft); color: var(--text-primary); }
+  .btn-secondary:hover { border-color: rgba(255, 255, 255, 0.4); background: rgba(255,255,255,0.04); }
+  .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ff8a8a; border: 1px solid rgba(239, 68, 68, 0.4); margin-right: auto; }
+  .btn-danger:hover { background: rgba(239, 68, 68, 0.25); transform: translateY(-2px); }
+
+  .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 10px 0 24px; }
+  .category-field { background: rgba(0, 0, 0, 0.18); border: 1px solid rgba(240, 188, 34, 0.15); border-radius: var(--radius-sm); padding: 14px; transition: border-color 0.25s ease, background 0.25s ease; }
+  .category-field:hover { border-color: rgba(240, 188, 34, 0.35); background: rgba(0,0,0,0.24); }
+  .category-field label { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; text-transform: none; letter-spacing: 0; font-size: 0.85rem; color: var(--text-primary); font-weight: 600; }
+  .category-field label .cf-icon { font-size: 1.1rem; }
+
+  .modal-summary { display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 16px; font-size: 0.95rem; color: var(--text-muted); }
+  .modal-summary b { color: var(--gold-mid); font-family: 'Fredoka', sans-serif; font-size: 1.05rem; }
+
+  @media (max-width: 900px) {
+    .board-head { display: none; }
+    .player-row { grid-template-columns: 50px 1fr; grid-template-areas: "rank main" "gen gen" "cats cats"; row-gap: 16px; }
+    .player-row .rank-num { grid-area: rank; font-size: 1.4rem; width: 40px; height: 40px; line-height: 40px; }
+    .player-row .player-main { grid-area: main; }
+    .player-row .general-badge { grid-area: gen; width: 100%; flex-direction: row; justify-content: space-between; padding: 12px 18px; }
+    .player-row .categories-row { grid-area: cats; flex-wrap: wrap; justify-content: flex-start; }
+    .top-bar { padding: 20px 20px; }
+    .controls { width: 100%; }
+    .search-wrap { flex: 1; }
+    #searchInput, #searchInput:focus { width: 100%; }
+    
+    /* Mobile formatting for the fixed bar */
+    .bar-center { display: none; } /* Hide helper text on mobile to save space */
+    .bar-left { flex: 2; }
+    .bar-right { flex: 1; }
+    .editor-bottom-bar { padding: 12px 20px; }
+  }
+
+  /* Invisible mobile-only trigger for Editor Mode login (password still required) */
+  .mobile-editor-trigger {
+    position: fixed; top: 0; right: 0;
+    width: 46px; height: 46px;
+    padding: 0; margin: 0; border: none; background: transparent;
+    opacity: 0; z-index: 500; display: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (max-width: 900px) {
+    .mobile-editor-trigger { display: block; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; } }
+</style>
+</head>
+<body>
+
+  <div class="bg-decor" aria-hidden="true">
+    <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+  </div>
+
+  <header class="site-header">
+  <div class="top-bar">
+    <div class="title-wrap">
+      <div class="title-badge" aria-hidden="true">🚪</div>
+      <div>
+        <h1 class="site-title">DOORS: TIERS</h1>
+        <p class="site-sub">Official DOORS: Tiers Tierlist! Join Our Discord: https://discord.gg/8qss5MJWKH</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="searchInput" type="text" placeholder="Search players...">
+      </div>
+      <div class="filter-wrap">
+        <select id="categoryFilterSelect">
+          <option value="all">All Categories</option>
+          <option value="hotelSpeedrun">Best Hotel Speedrun</option>
+          <option value="minesSpeedrun">Best Mines Speedrun</option>
+          <option value="backdoorSpeedrun">Best Backdoor Speedrun</option>
+          <option value="outdoorsSpeedrun">Best Outdoors Speedrun</option>
+          <option value="hotelModifiers">Best Hotel Mods</option>
+          <option value="minesModifiers">Best Mines Mods</option>
+          <option value="skillTest1v1">Best Skill 1v1</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  </header>
+
+  <div class="stats-strip">
+    <div class="stat-pill">Players <b id="statCount">0</b></div>
+    <div class="stat-pill">Top Player <b id="statTop">—</b></div>
+    <div class="stat-pill">Highest Score <b id="statMaxPoints">0</b></div>
+  </div>
+
+  <main class="board-wrap">
+    <div class="board-head">
+      <span class="col-rank">#</span>
+      <span class="col-player">Player Profile</span>
+      <span class="col-general">General Tier</span>
+      <span class="col-categories">Categories</span>
+    </div>
+    <div id="playerList" class="player-list"></div>
+    <p id="emptyState" class="empty-state" hidden>No players found.</p>
+  </main>
+
+  <!-- REPLACED: Footer and Floating Stack are now unified in a fixed bottom bar layout -->
+  <div class="editor-bottom-bar">
+    <div class="bar-left">
+      <div id="editorTools" class="editor-tools-group" hidden>
+        <div class="editor-flag"><span class="dot"></span> Editor Mode Active</div>
+        <button id="exportBtn" class="editor-btn">📤 Export</button>
+      </div>
+      <button id="importBtnGlobal" class="editor-btn">📥 Import</button>
+    </div>
+    
+    <div class="bar-center"></div>
+    
+    <div class="bar-right">
+      <button id="addPlayerBtn" class="fab-small" hidden title="Add new player">+</button>
+    </div>
+  </div>
+
+  <button id="mobileEditorTrigger" class="mobile-editor-trigger" aria-hidden="true" tabindex="-1"></button>
+
+  <!-- Password Modal -->
+  <div id="passwordModal" class="modal-overlay" hidden>
+    <div class="modal">
+      <h2>🔒 Secure Login</h2>
+      <p>Enter the editor password to unlock tier management features.</p>
+      <input id="passwordInput" type="password" placeholder="Admin Password" autocomplete="off">
+      <p id="passwordError" class="error-text" hidden>Incorrect password. Access denied.</p>
+      <div class="modal-actions">
+        <button id="passwordCancel" class="btn-secondary">Cancel</button>
+        <button id="passwordSubmit" class="btn-primary">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Player Modal -->
+  <div id="playerModal" class="modal-overlay" hidden>
+    <div class="modal modal-large">
+      <h2 id="playerModalTitle">Add Player</h2>
+      <p>Set a username and assign a tier for each category. Points calculate automatically.</p>
+      <label for="playerNameInput">Player Username</label>
+      <input id="playerNameInput" type="text" placeholder="e.g. Fracture">
+      <div id="categoryGrid" class="category-grid"></div>
+      <div class="modal-summary">
+        <span>Total Points: <b id="modalTotalPoints">0</b></span>
+        <span>General Tier: <b id="modalGeneralTier">UNRANKED</b></span>
+      </div>
+      <div class="modal-actions">
+        <button id="deletePlayerBtn" class="btn-danger" hidden>Delete</button>
+        <button id="playerModalCancel" class="btn-secondary">Cancel</button>
+        <button id="playerModalSave" class="btn-primary">Save Player</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Modal -->
+  <div id="exportModal" class="modal-overlay" hidden>
+    <div class="modal modal-large">
+      <h2>📤 Export Secure Code</h2>
+      <p>Copy this short scrambled code string to back up or securely share your tierlist data.</p>
+      <textarea id="exportTextarea" readonly style="width: 100%; height: 200px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border-hi); color: var(--gold-light); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.85rem; resize: vertical; margin-bottom: 20px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);"></textarea>
+      <div class="modal-actions">
+        <button id="exportClose" class="btn-secondary">Close</button>
+        <button id="copyExportBtn" class="btn-primary">Copy Code</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Modal -->
+  <div id="importModal" class="modal-overlay" hidden>
+    <div class="modal modal-large">
+      <h2>📥 Import Secure Code</h2>
+      <p>Paste your scrambled tierlist code string below to update the leaderboard.</p>
+      <textarea id="importTextarea" placeholder="Paste secure code here..." style="width: 100%; height: 200px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border-hi); color: var(--text-primary); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.85rem; resize: vertical; margin-bottom: 10px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);"></textarea>
+      <p id="importError" class="error-text" hidden>Invalid or corrupted code structure.</p>
+      <div class="modal-actions">
+        <button id="importClose" class="btn-secondary">Cancel</button>
+        <button id="importSubmit" class="btn-primary">Import & Save</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ================= CONFIG ================= */
+  // Password is obfuscated (XOR + base64) so it isn't plainly readable via "View Source".
+  // Note: this is obfuscation, not real encryption — any client-side secret can still be
+  // recovered by someone willing to run this same decode function in devtools.
+  function _decodePw(encoded, key){
+    const bin = atob(encoded);
+    let out = "";
+    for(let i = 0; i < bin.length; i++){
+      out += String.fromCharCode(bin.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return out;
+  }
+  const EDITOR_PASSWORD = _decodePw("FCEyEEQpJSR3STE1YXJpIjwHOkg/OndWREYABXdfMxRYVw==", "DrsTiersEdit26");
+  const STORAGE_KEY = "MCTIERS_LeaderboardData_v5";
+
+  const CATEGORIES = [
+    {key: "hotelSpeedrun", label: "Hotel Speedrun", icon: "🏨"},
+    {key: "minesSpeedrun", label: "Mines Speedrun", icon: "⛏️"},
+    {key: "backdoorSpeedrun", label: "Backdoor Speedrun", icon: "🚪"},
+    {key: "outdoorsSpeedrun", label: "Outdoors Speedrun", icon: "🌳"},
+    {key: "hotelModifiers", label: "Hotel Modifiers", icon: "🛎️"},
+    {key: "minesModifiers", label: "Mines Modifiers", icon: "⚙️"},
+    {key: "skillTest1v1", label: "Skill Test 1v1", icon: "⚔️"}
+  ];
+
+  const TIER_GROUPS = [
+    {group: "Iron Tier", tiers: ["IT1", "IT2", "IT3"]},
+    {group: "Gold Tier", tiers: ["GT1", "GT2", "GT3"]},
+    {group: "Diamond Tier", tiers: ["DT1", "DT2", "DT3"]},
+    {group: "Platinum Tier", tiers: ["PT1", "PT2", "PT3"]},
+    {group: "Challenger Tier", tiers: ["CTM"]}
+  ];
+
+  const TIER_POINTS = {
+    "N/A": 0,
+    IT1: 1, IT2: 2, IT3: 3,
+    GT1: 4, GT2: 5, GT3: 6,
+    DT1: 7, DT2: 8, DT3: 9,
+    PT1: 10, PT2: 11, PT3: 12,
+    CTM: 13
+  };
+
+  const TIER_MAP_ENC = {"N/A":0, IT1:1, IT2:2, IT3:3, GT1:4, GT2:5, GT3:6, DT1:7, DT2:8, DT3:9, PT1:10, PT2:11, PT3:12, CTM:13};
+  const TIER_MAP_DEC = ["N/A", "IT1", "IT2", "IT3", "GT1", "GT2", "GT3", "DT1", "DT2", "DT3", "PT1", "PT2", "PT3", "CTM"];
+  const TIER_FAMILY_NAMES = { IT: "Iron", GT: "Gold", DT: "Diamond", PT: "Platinum", CTM: "Challenger" };
+  const ROMAN = { 1: "I", 2: "II", 3: "III" };
+  const MAX_SCALE = 91; 
+
+  /* ================= STATE ================= */
+  let players = [];
+  let editorMode = false;
+  let editingPlayerId = null;
+
+  /* ================= ULTRA-COMPACT INTEGER MAPPING ENCODING ================= */
+  function encodeData(dataObj) {
+    try {
+      const compact = dataObj.map(p => [
+        p.name,
+        CATEGORIES.map(cat => TIER_MAP_ENC[p.categories && p.categories[cat.key] ? p.categories[cat.key] : "N/A"] ?? 0)
+      ]);
+      return btoa(encodeURIComponent(JSON.stringify(compact)));
+    } catch(e) { return ""; }
+  }
+
+  function decodeData(encodedStr) {
+    try {
+      const jsonStr = decodeURIComponent(atob(encodedStr));
+      const parsed = JSON.parse(jsonStr);
+      if(!Array.isArray(parsed)) return null;
+      return parsed.map((p, idx) => {
+        if(Array.isArray(p)) {
+          const cats = {};
+          CATEGORIES.forEach((cat, cIdx) => {
+            const valIdx = p[1] && typeof p[1][cIdx] === 'number' ? p[1][cIdx] : 0;
+            cats[cat.key] = TIER_MAP_DEC[valIdx] || "N/A";
+          });
+          return { id: "p_" + idx + "_" + Math.random().toString(36).substr(2, 4), name: p[0] || "Unknown", categories: cats };
+        } else {
+          const cats = {}; const rawCats = p.categories || p.c || {};
+          CATEGORIES.forEach(cat => cats[cat.key] = rawCats[cat.key] || "N/A");
+          return { id: p.id || ("p_" + idx), name: p.name || "Unknown", categories: cats };
+        }
+      });
+    } catch(e) { return null; }
+  }
+
+  /* ================= PERSISTENCE ================= */
+  function loadData(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw) {
+        const parsed = decodeData(raw);
+        if(Array.isArray(parsed)) return parsed;
+      }
+    } catch(e) {}
+    const seeded = []; saveData(seeded); return seeded;
+  }
+  function saveData(data){ localStorage.setItem(STORAGE_KEY, encodeData(data)); }
+
+  /* ================= CALCULATIONS ================= */
+  function calcTotalPoints(categories){
+    let total = 0; CATEGORIES.forEach(cat => total += TIER_POINTS[categories[cat.key] || "N/A"] || 0); return total;
+  }
+  function getGeneralTier(points){
+    if(points <= 0) return "UNRANKED"; if(points <= 9) return "IT1"; if(points <= 14) return "IT2"; if(points <= 19) return "IT3";
+    if(points <= 29) return "GT1"; if(points <= 39) return "GT2"; if(points <= 46) return "GT3"; if(points <= 51) return "DT1";
+    if(points <= 57) return "DT2"; if(points <= 70) return "DT3"; if(points <= 80) return "PT1"; if(points <= 86) return "PT2";
+    if(points <= 90) return "PT3"; return "CTM";
+  }
+  function tierVisuals(tierCode){
+    if(!tierCode || tierCode === "N/A" || tierCode === "UNRANKED") return {cls: "fam-unranked", abbr: tierCode === "UNRANKED" ? "UNRANKED" : "N/A", name: "Unranked"};
+    if(tierCode === "CTM") return {cls: "fam-ctm", abbr: "CTM", name: "Challenger Max"};
+    const prefix = tierCode.slice(0,2); const level = tierCode.slice(2);
+    const familyMap = {IT: "iron", GT: "gold", DT: "diamond", PT: "plat"}; const famKey = familyMap[prefix];
+    const cls = famKey ? `fam-${famKey}-${level}` : "fam-unranked";
+    const fullName = TIER_FAMILY_NAMES[prefix] || "Unranked"; return {cls, abbr: tierCode, name: `${fullName} ${ROMAN[level] || ""}`};
+  }
+  function progressColor(points){
+    const v = tierVisuals(getGeneralTier(points));
+    if(v.cls === "fam-ctm") return "linear-gradient(90deg, var(--ctm-a), var(--ctm-c))";
+    if(v.cls.startsWith("fam-plat")) return "linear-gradient(90deg, var(--plat-1), var(--plat-3))";
+    if(v.cls.startsWith("fam-diamond")) return "linear-gradient(90deg, var(--diamond-1), var(--diamond-3))";
+    if(v.cls.startsWith("fam-gold")) return "linear-gradient(90deg, var(--gold-1), var(--gold-3))";
+    if(v.cls.startsWith("fam-iron")) return "linear-gradient(90deg, var(--iron-1), var(--iron-3))";
+    return "rgba(255,255,255,0.2)";
+  }
+  function getComputedAccent(famCls){
+    const map = { "fam-unranked":"var(--unranked)", "fam-iron-1":"var(--iron-1)", "fam-iron-2":"var(--iron-2)", "fam-iron-3":"var(--iron-3)", "fam-gold-1":"var(--gold-1)", "fam-gold-2":"var(--gold-2)", "fam-gold-3":"var(--gold-3)", "fam-diamond-1":"var(--diamond-1)", "fam-diamond-2":"var(--diamond-2)", "fam-diamond-3":"var(--diamond-3)", "fam-plat-1":"var(--plat-1)", "fam-plat-2":"var(--plat-2)", "fam-plat-3":"var(--plat-3)", "fam-ctm":"var(--ctm-b)" };
+    return map[famCls] || "var(--border-soft)";
+  }
+
+  /* ================= RENDER ================= */
+  const playerListEl = document.getElementById("playerList");
+  const emptyStateEl = document.getElementById("emptyState");
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilterSelect = document.getElementById("categoryFilterSelect");
+
+  function getSortedAll(){
+    const activeFilter = categoryFilterSelect.value;
+    return players.map(p => {
+      const points = calcTotalPoints(p.categories);
+      const sortVal = activeFilter !== "all" ? (TIER_POINTS[p.categories[activeFilter] || "N/A"] || 0) : points;
+      return { ref: p, points, sortVal };
+    }).sort((a,b) => {
+      if(b.sortVal !== a.sortVal) return b.sortVal - a.sortVal;
+      return a.ref.name.localeCompare(b.ref.name);
+    });
+  }
+
+  function renderList(){
+    const query = searchInput.value.trim().toLowerCase();
+    const activeFilter = categoryFilterSelect.value;
+    const sortedAll = getSortedAll();
+    
+    document.getElementById("statCount").textContent = players.length;
+    if(sortedAll.length){
+      document.getElementById("statTop").textContent = sortedAll[0].ref.name;
+      document.getElementById("statMaxPoints").textContent = sortedAll[0].points;
+    } else {
+      document.getElementById("statTop").textContent = "—";
+      document.getElementById("statMaxPoints").textContent = "0";
+    }
+
+    const rankMap = {}; sortedAll.forEach((item, idx) => rankMap[item.ref.id] = idx + 1);
+    const visible = sortedAll.filter(item => item.ref.name.toLowerCase().includes(query));
+    
+    playerListEl.innerHTML = "";
+    emptyStateEl.hidden = visible.length > 0;
+
+    visible.forEach(item => {
+      const { ref: player, points } = item;
+      const rank = rankMap[player.id];
+      const gv = tierVisuals(getGeneralTier(points));
+      const rankClass = rank === 1 ? "rank-1" : rank === 2 ? "rank-2" : rank === 3 ? "rank-3" : "rank-default";
+      const progressPct = Math.max(4, Math.min(100, Math.round((points / MAX_SCALE) * 100)));
+      const row = document.createElement("div");
+      row.className = `player-row ${rankClass} ${editorMode ? "editable" : ""}`;
+      row.style.setProperty("--row-accent", getComputedAccent(gv.cls));
+      
+      const catsHtml = CATEGORIES.map(cat => {
+        const v = tierVisuals(player.categories[cat.key] || "N/A");
+        const isHighlight = activeFilter === cat.key;
+        return `<div class="cat-badge ${isHighlight ? 'highlight-cat' : ''}"><div class="cat-icon-label"><span class="cat-icon">${cat.icon}</span><span class="cat-label">${cat.label}</span></div><span class="cat-value ${v.cls}">${v.abbr}</span></div>`;
+      }).join("");
+
+      row.innerHTML = `
+        <div class="rank-num">${rank}</div>
+        <div class="player-main">
+          <div class="player-name">${String(player.name).replace(/</g,"&lt;")}</div>
+          <div class="player-points">${points} Total Points</div>
+          <div class="progress-track"><div class="progress-fill" style="width:${progressPct}%; background:${progressColor(points)};"></div></div>
+        </div>
+        <div class="general-badge ${gv.cls}"><span class="gb-abbr">${gv.abbr}</span><span class="gb-name">${gv.name}</span></div>
+        <div class="categories-row">${catsHtml}</div>
+        ${editorMode ? '<div class="edit-pencil">✎</div>' : ''}
+      `;
+      if(editorMode) row.addEventListener("click", () => openPlayerModal(player.id));
+      playerListEl.appendChild(row);
+    });
+  }
+
+  /* ================= EDITOR & MODALS ================= */
+  const passwordModal = document.getElementById("passwordModal");
+  const playerModal = document.getElementById("playerModal");
+  const exportModal = document.getElementById("exportModal");
+  const importModal = document.getElementById("importModal");
+  const passwordInput = document.getElementById("passwordInput");
+
+  function toggleEditor(state) {
+    editorMode = state;
+    document.getElementById("addPlayerBtn").hidden = !state;
+    document.getElementById("editorTools").hidden = !state;
+    renderList();
+  }
+
+  document.getElementById("passwordSubmit").addEventListener("click", () => {
+    if(passwordInput.value === EDITOR_PASSWORD){
+      toggleEditor(true);
+      passwordModal.hidden = true;
+    } else { document.getElementById("passwordError").hidden = false; }
+  });
+  
+  document.getElementById("passwordCancel").addEventListener("click", () => passwordModal.hidden = true);
+
+  function openPasswordModal(){
+    if(editorMode) return;
+    passwordInput.value = ""; document.getElementById("passwordError").hidden = true;
+    passwordModal.hidden = false; setTimeout(() => passwordInput.focus(), 50);
+  }
+
+  document.getElementById("mobileEditorTrigger").addEventListener("click", () => {
+    if(passwordModal.hidden) openPasswordModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key.toLowerCase() === "x" && !["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName) && passwordModal.hidden && playerModal.hidden && exportModal.hidden && importModal.hidden && !editorMode){
+      e.preventDefault(); openPasswordModal();
+    }
+    if(e.key === "Escape") { passwordModal.hidden = true; playerModal.hidden = true; exportModal.hidden = true; importModal.hidden = true; }
+  });
+
+  function buildCategoryGrid(currentCats){
+    const grid = document.getElementById("categoryGrid");
+    grid.innerHTML = CATEGORIES.map(cat => {
+      const selected = currentCats[cat.key] || "N/A";
+      let options = `<option value="N/A" ${selected === "N/A" ? "selected" : ""}>N/A</option>`;
+      TIER_GROUPS.forEach(g => {
+        options += `<optgroup label="${g.group}">` + g.tiers.map(t => `<option value="${t}" ${selected === t ? "selected" : ""}>${t}</option>`).join("") + `</optgroup>`;
+      });
+      return `<div class="category-field"><label><span class="cf-icon">${cat.icon}</span> ${cat.label}</label><select data-key="${cat.key}">${options}</select></div>`;
+    }).join("");
+  }
+
+  function readModalData(){
+    const cats = {}; document.querySelectorAll("#categoryGrid select").forEach(sel => cats[sel.dataset.key] = sel.value); return cats;
+  }
+
+  document.getElementById("categoryGrid").addEventListener("change", () => {
+    const total = calcTotalPoints(readModalData());
+    document.getElementById("modalTotalPoints").textContent = total;
+    document.getElementById("modalGeneralTier").textContent = getGeneralTier(total);
+  });
+
+  function openPlayerModal(id){
+    editingPlayerId = id || null;
+    const player = id ? players.find(p => p.id === id) : {name: "", categories: {}};
+    document.getElementById("playerModalTitle").textContent = id ? "Edit Player" : "Add Player";
+    document.getElementById("playerNameInput").value = player.name;
+    document.getElementById("deletePlayerBtn").hidden = !id;
+    buildCategoryGrid(player.categories);
+    document.getElementById("categoryGrid").dispatchEvent(new Event("change"));
+    playerModal.hidden = false;
+    setTimeout(() => document.getElementById("playerNameInput").focus(), 50);
+  }
+
+  document.getElementById("playerModalSave").addEventListener("click", () => {
+    const nameInput = document.getElementById("playerNameInput");
+    if(!nameInput.value.trim()){ nameInput.style.borderColor = "var(--danger)"; return; }
+    const categories = readModalData();
+    if(editingPlayerId){
+      const p = players.find(p => p.id === editingPlayerId);
+      if(p) { p.name = nameInput.value.trim(); p.categories = categories; }
+    } else {
+      players.push({ id: "p_" + Date.now(), name: nameInput.value.trim(), categories });
+    }
+    saveData(players); playerModal.hidden = true; renderList();
+  });
+
+  document.getElementById("deletePlayerBtn").addEventListener("click", () => {
+    if(confirm("Delete this player?")){ players = players.filter(p => p.id !== editingPlayerId); saveData(players); playerModal.hidden = true; renderList(); }
+  });
+
+  document.getElementById("exportBtn").addEventListener("click", () => {
+    document.getElementById("exportTextarea").value = encodeData(players); exportModal.hidden = false;
+  });
+  document.getElementById("exportClose").addEventListener("click", () => exportModal.hidden = true);
+  document.getElementById("copyExportBtn").addEventListener("click", () => {
+    const ta = document.getElementById("exportTextarea"); ta.select();
+    navigator.clipboard.writeText(ta.value).then(() => {
+      const btn = document.getElementById("copyExportBtn"); const orig = btn.textContent;
+      btn.textContent = "Copied Code!"; setTimeout(() => btn.textContent = orig, 2000);
+    });
+  });
+
+  document.getElementById("importBtnGlobal").addEventListener("click", () => {
+    document.getElementById("importTextarea").value = ""; document.getElementById("importError").hidden = true; importModal.hidden = false;
+  });
+  document.getElementById("importClose").addEventListener("click", () => importModal.hidden = true);
+  document.getElementById("importSubmit").addEventListener("click", () => {
+    const val = document.getElementById("importTextarea").value.trim();
+    const parsed = decodeData(val);
+    if(Array.isArray(parsed)) { players = parsed; saveData(players); importModal.hidden = true; renderList(); alert("Tierlist updated successfully!"); } 
+    else { document.getElementById("importError").hidden = false; }
+  });
+
+  document.getElementById("addPlayerBtn").addEventListener("click", () => openPlayerModal(null));
+  document.getElementById("playerModalCancel").addEventListener("click", () => playerModal.hidden = true);
+  searchInput.addEventListener("input", renderList);
+  categoryFilterSelect.addEventListener("change", renderList);
+  
+  window.addEventListener("click", e => {
+    if(e.target === passwordModal) passwordModal.hidden = true; if(e.target === playerModal) playerModal.hidden = true;
+    if(e.target === exportModal) exportModal.hidden = true; if(e.target === importModal) importModal.hidden = true;
+  });
+
+  /* Init */
+  players = loadData();
+  renderList();
+})();
+</script>
+</body>
+</html>

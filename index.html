@@ -61,7 +61,7 @@
       radial-gradient(800px 500px at 50% 100%, rgba(179,102,255,0.05), transparent 55%),
       var(--bg-deep);
     background-attachment: fixed;
-    padding-bottom: 110px; /* Increased to ensure list clears the new fixed bar */
+    padding-bottom: 110px;
     position: relative;
     isolation: isolate;
   }
@@ -95,7 +95,7 @@
   @keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes shimmerSweep { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-  /* Header */
+ 
   .site-header {
     position: sticky; top: 0; z-index: 50;
     background: rgba(8, 10, 16, 0.72); backdrop-filter: blur(18px) saturate(140%);
@@ -124,14 +124,14 @@
   .filter-wrap select:focus, .filter-wrap select:hover { border-color: var(--ring-gold); box-shadow: 0 0 0 4px rgba(240, 188, 34, 0.12); }
   .filter-wrap select option { background: var(--bg-panel-2); color: var(--text-primary); }
 
-  /* Board Stats */
+
   .stats-strip { max-width: 1200px; margin: 0 auto; padding: 22px 24px 22px; display: flex; gap: 16px; flex-wrap: wrap; }
   .stat-pill { position: relative; background: linear-gradient(180deg, var(--glass-bg-2), var(--glass-bg)); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 14px; padding: 12px 20px; font-size: 0.85rem; color: var(--text-muted); display: flex; gap: 9px; align-items: baseline; box-shadow: var(--shadow-soft); transition: transform 0.3s var(--ease-snap), border-color 0.3s ease, box-shadow 0.3s ease; overflow: hidden; }
   .stat-pill::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: linear-gradient(180deg, var(--gold-light), var(--gold-dark)); }
   .stat-pill:hover { transform: translateY(-3px); border-color: var(--glass-border-hi); box-shadow: var(--shadow-lift-hover); }
   .stat-pill b { color: var(--text-primary); font-size: 1.15rem; font-family: 'Fredoka', sans-serif; }
 
-  /* Leaderboard */
+
   .board-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   .board-head { display: grid; grid-template-columns: 60px 1fr 140px 560px; gap: 20px; padding: 0 24px 14px; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 700; }
   .col-general { text-align: center; }
@@ -184,7 +184,7 @@
   .edit-pencil { position: absolute; top: -10px; right: -10px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg-panel-2); border: 2px solid rgba(240, 188, 34, 0.8); color: var(--gold-mid); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; opacity: 0; transform: scale(0.7); box-shadow: 0 6px 16px rgba(0,0,0,0.4); transition: opacity 0.2s ease, transform 0.2s var(--ease-snap); }
   .player-row.editable:hover .edit-pencil { opacity: 1; transform: scale(1); }
 
-  /* Tiers Styling */
+
   .fam-unranked { background: rgba(255, 255, 255, 0.05); color: var(--text-dim); }
   .fam-iron-1 { background: linear-gradient(160deg, color-mix(in srgb, var(--iron-1) 85%, white), var(--iron-1)); color: #fff; }
   .fam-iron-2 { background: linear-gradient(160deg, color-mix(in srgb, var(--iron-2) 85%, white), var(--iron-2)); color: #111; }
@@ -204,7 +204,7 @@
 
   .empty-state { text-align: center; color: var(--text-muted); padding: 70px 20px; font-size: 1rem; }
 
-  /* ================= NEW EDITOR BOTTOM BAR ================= */
+
   .editor-bottom-bar {
     position: fixed; bottom: 0; left: 0; right: 0;
     background: rgba(8, 10, 16, 0.85); backdrop-filter: blur(18px) saturate(140%);
@@ -239,7 +239,7 @@
   .fab-small:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 10px 30px rgba(240, 188, 34, 0.5); }
   .fab-small:active { transform: scale(0.95) rotate(90deg); }
 
-  /* Modals */
+
   .modal-overlay { position: fixed; inset: 0; background: rgba(4, 5, 8, 0.78); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px; animation: overlayFade 0.2s ease both; }
   .modal { position: relative; background: linear-gradient(180deg, var(--bg-panel-2), var(--bg-panel)); border: 1px solid var(--glass-border-hi); border-radius: var(--radius-lg); padding: 32px; width: 100%; max-width: 400px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255,255,255,0.02); max-height: 90vh; overflow-y: auto; animation: modalPop 0.3s var(--ease-snap) both; }
   .modal::before { content: ""; position: absolute; top: 0; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-mid), transparent); opacity: 0.6; }
@@ -285,14 +285,14 @@
     .search-wrap { flex: 1; }
     #searchInput, #searchInput:focus { width: 100%; }
     
-    /* Mobile formatting for the fixed bar */
-    .bar-center { display: none; } /* Hide helper text on mobile to save space */
+
+    .bar-center { display: none; }
     .bar-left { flex: 2; }
     .bar-right { flex: 1; }
     .editor-bottom-bar { padding: 12px 20px; }
   }
 
-  /* Invisible mobile-only trigger for Editor Mode login (password still required) */
+
   .mobile-editor-trigger {
     position: fixed; top: 0; right: 0;
     width: 46px; height: 46px;
@@ -360,7 +360,7 @@
     <p id="emptyState" class="empty-state" hidden>No players found.</p>
   </main>
 
-  <!-- REPLACED: Footer and Floating Stack are now unified in a fixed bottom bar layout -->
+
   <div class="editor-bottom-bar">
     <div class="bar-left">
       <div id="editorTools" class="editor-tools-group" hidden>
@@ -379,11 +379,11 @@
 
   <button id="mobileEditorTrigger" class="mobile-editor-trigger" aria-hidden="true" tabindex="-1"></button>
 
-  <!-- Password Modal -->
+
   <div id="passwordModal" class="modal-overlay" hidden>
     <div class="modal">
       <h2>🔒 Secure Login</h2>
-      <p>Enter the editor password to unlock tier management features.</p>
+      <p>Enter the password to enter Editor Mode</p>
       <input id="passwordInput" type="password" placeholder="Admin Password" autocomplete="off">
       <p id="passwordError" class="error-text" hidden>Incorrect password. Access denied.</p>
       <div class="modal-actions">
@@ -393,7 +393,7 @@
     </div>
   </div>
 
-  <!-- Player Modal -->
+
   <div id="playerModal" class="modal-overlay" hidden>
     <div class="modal modal-large">
       <h2 id="playerModalTitle">Add Player</h2>
@@ -413,11 +413,11 @@
     </div>
   </div>
 
-  <!-- Export Modal -->
+
   <div id="exportModal" class="modal-overlay" hidden>
     <div class="modal modal-large">
       <h2>📤 Export Secure Code</h2>
-      <p>Copy this short scrambled code string to back up or securely share your tierlist data.</p>
+      <p>Copy this code string and paste it into results and backup codes.</p>
       <textarea id="exportTextarea" readonly style="width: 100%; height: 200px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border-hi); color: var(--gold-light); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.85rem; resize: vertical; margin-bottom: 20px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);"></textarea>
       <div class="modal-actions">
         <button id="exportClose" class="btn-secondary">Close</button>
@@ -426,11 +426,11 @@
     </div>
   </div>
 
-  <!-- Import Modal -->
+
   <div id="importModal" class="modal-overlay" hidden>
     <div class="modal modal-large">
       <h2>📥 Import Secure Code</h2>
-      <p>Paste your scrambled tierlist code string below to update the leaderboard.</p>
+      <p>Paste your code string below to update the leaderboard.</p>
       <textarea id="importTextarea" placeholder="Paste secure code here..." style="width: 100%; height: 200px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border-hi); color: var(--text-primary); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.85rem; resize: vertical; margin-bottom: 10px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);"></textarea>
       <p id="importError" class="error-text" hidden>Invalid or corrupted code structure.</p>
       <div class="modal-actions">
